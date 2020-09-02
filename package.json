@@ -19,7 +19,8 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "sass": "^1.26.10"
   },
   "license": "ISC",
   "devDependencies": {

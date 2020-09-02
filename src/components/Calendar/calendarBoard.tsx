@@ -1,7 +1,7 @@
 import { GridList, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import CalendarElement from "./calendarElement";
-import {createCalendar} from "../../services/calendar";
+import CalendarElement from "./CalendarElement";
+import { createCalendar } from "../../services/calendar";
 import dayjs from "dayjs";
 
 const useStyles = makeStyles({
@@ -20,10 +20,9 @@ const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 const CalendarBoard = () => {
   const classes = useStyles();
-  const currentDate = dayjs()
+  const currentDate = dayjs();
   const calendar = createCalendar(currentDate);
-  
-  
+
   return (
     <div>
       <GridList
@@ -45,8 +44,8 @@ const CalendarBoard = () => {
           </li>
         ))}
         {calendar.map((date) => (
-          <li 
-            // key={date.toISOString()} 
+          <li
+            key={date.toISOString()}
             // onClick={() => {
             //   dispatch(setDate(date))
             //   {props.onClick && props.onClick(schedules)}
@@ -62,7 +61,7 @@ const CalendarBoard = () => {
         ))}
       </GridList>
     </div>
-  );;
+  );
 };
 
 export default CalendarBoard;

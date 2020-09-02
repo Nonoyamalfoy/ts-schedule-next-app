@@ -1,5 +1,7 @@
+import Link from "next/link";
+
 const Index = () => {
-  return <div/>;
+  return <Link href="/top">トップへ</Link>;
 };
 
 export default Index;
