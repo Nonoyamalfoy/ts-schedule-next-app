@@ -1,8 +1,12 @@
 import { GridList, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import CalendarElement from "./calendarElement";
-import {createCalendar} from "../../services/calendar";
-import dayjs from "dayjs";
+import CalendarElement from "./CalendarElement";
+import { createCalendar } from "../../services/calendar";
+import { useSelector, useDispatch } from "react-redux";
+import { getCurrentDate } from "../../reducks/calendar/selectors";
+import { setSchedules } from "../../services/schedule";
+import { getSchedules } from "../../reducks/users/selectors";
+import { setDate } from "../../reducks/calendar/oeprations";
 
 const useStyles = makeStyles({
   grid: {
@@ -18,12 +22,22 @@ const useStyles = makeStyles({
 
 const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-const CalendarBoard = () => {
+type Props = {
+  schedulesStyle: string
+  onClick?: any;
+}
+
+const CalendarBoard = (props: Props) => {
   const classes = useStyles();
-  const currentDate = dayjs()
-  const calendar = createCalendar(currentDate);
+  const selector = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const currentDate = getCurrentDate(selector);
+  // const currentDate = dayjs();
+  const schedules = getSchedules(selector);
+  const calendar = setSchedules(createCalendar(currentDate), schedules);
+  console.log(schedules);
   
-  
+
   return (
     <div>
       <GridList
@@ -44,17 +58,17 @@ const CalendarBoard = () => {
             </Typography>
           </li>
         ))}
-        {calendar.map((date) => (
-          <li 
-            // key={date.toISOString()} 
-            // onClick={() => {
-            //   dispatch(setDate(date))
-            //   {props.onClick && props.onClick(schedules)}
-            // }}
+        {calendar.map(({date, schedules}) => (
+          <li
+            key={date.toISOString()}
+            onClick={() => {
+              dispatch(setDate(date))
+              {props.onClick && props.onClick(schedules)}
+            }}
           >
             <CalendarElement
-              // schedulesStyle={props.schedulesStyle}
-              // schedules={schedules}
+              schedulesStyle={props.schedulesStyle}
+              schedules={schedules}
               date={date}
               // schedules={schedules}
             />
@@ -62,7 +76,7 @@ const CalendarBoard = () => {
         ))}
       </GridList>
     </div>
-  );;
+  );
 };
 
 export default CalendarBoard;
