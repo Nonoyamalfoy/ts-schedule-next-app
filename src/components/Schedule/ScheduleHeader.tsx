@@ -2,11 +2,11 @@ import React from "react";
 import CreateIcon from '@material-ui/icons/Create';
 import { IconButton } from "@material-ui/core";
 // import {getDate} from "../../services/calendar";
-// import {getCurrentDate} from "../../reducks/calendar/selectors";
-// import {openAddScheduleDialog} from "../../reducks/addSchedule/operation";
-import {useDispatch, useSelector} from "react-redux";
+import {getCurrentDate} from "../../reducks/calendar/selectors";
+import {openAddScheduleDialog} from "../../reducks/addSchedule/operation";
 import {makeStyles} from "@material-ui/styles";
-// import {CreateButton} from "../Uikit"
+import {CreateButton} from "../Uikit"
+import {useDispatch, useSelector} from "react-redux";
 
 const useStyles = makeStyles({
   icon :{
@@ -16,18 +16,18 @@ const useStyles = makeStyles({
 
 const ScheduleHeader = () => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
-  // const selector = useSelector((state) => state)
-  // const currentDate = getCurrentDate(selector);
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state)
+  const currentDate = getCurrentDate(selector);
 
   return (
     <div className="container__header">
         <h2 >SCHEDULES</h2>
-        {/* <CreateButton
+        <CreateButton
             className={classes.icon}
             size="small"
             onClick={() => dispatch(openAddScheduleDialog(currentDate, "default", "", "", "", ""))}
-          /> */}
+          />
     </div>
   );
 

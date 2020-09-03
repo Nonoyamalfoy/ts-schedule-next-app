@@ -2,6 +2,9 @@ import {Typography, ListItem} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 // import {ScheduleBar} from "./index";
 import { isSameMonth, isFirstDay, isSameDay } from "../../services/calendar";
+import {ScheduleBar} from "./index";
+import { getCurrentDate } from "../../reducks/calendar/selectors";
+import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 
 const useStyles = makeStyles({
@@ -38,19 +41,23 @@ const useStyles = makeStyles({
 
 type Props = {
   date: dayjs.Dayjs;
+  schedulesStyle: string;
+  schedules: any;
 }
 
 
 const CalendarElement = (props: Props) => {
   const classes = useStyles();
+  const selector = useSelector((state) => state);
   const format = isFirstDay(props.date) ? "M/D" : "D";
-  const currentDate = dayjs();
+  const currentDate = getCurrentDate(selector);
+  const today = dayjs();
   const isCurrentMonth = isSameMonth(props.date, currentDate) ? "textPrimary" : "textSecondary";
 
   let date = "";
   if(isSameDay(props.date, currentDate)) {
     date = classes.currentDate
-  } else if(isSameDay(props.date, currentDate)) {
+  } else if(isSameDay(props.date, today)) {
     date = classes.today
   }
 
@@ -67,10 +74,10 @@ const CalendarElement = (props: Props) => {
           {props.date.format(format)}
         </span>
       </Typography>
-      <div >
-        {/* {props.schedules.map(schedule => (
-          <ScheduleBar key={schedule.scheduleId} schedule={schedule}/>
-        ))} */}
+      <div className={props.schedulesStyle}>
+        {props.schedules.map((schedule) => (
+          <ScheduleBar key={schedule.scheduleId} schedule={schedule} />
+        ))}
       </div>
     </ListItem >
   )

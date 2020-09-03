@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-// import { getDiaries} from "../../reducks/users/selectors";
-// import {getDate} from "../../services/calendar";
-// import {getCurrentDate} from "../../reducks/calendar/selectors";
+import { getDiaries} from "../../reducks/users/selectors";
+import {getCurrentDate} from "../../reducks/calendar/selectors";
 import { returnCodeToBr } from "../../services/diary";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => createStyles({
   diaryTextContent: {
     [theme.breakpoints.up(600)]: {
       position: "absolute",
@@ -22,15 +21,15 @@ const useStyles = makeStyles((theme) => ({
 
 const DiaryTextContent = () => {
   const classes = useStyles();
-  // const selector = useSelector((state) =>  state);
-  // const diaries = getDiaries(selector);
-  // const currentDate = getCurrentDate(selector);
-  // const formatCurrentDate = currentDate.format("YYYYMMDD");
-  // const currentDiary = diaries.find(d => d.date === formatCurrentDate);
+  const selector = useSelector((state) =>  state);
+  const diaries = getDiaries(selector);
+  const currentDate = getCurrentDate(selector);
+  const formatCurrentDate = currentDate.format("YYYYMMDD");
+  const currentDiary = diaries.find(d => d.date === formatCurrentDate);
 
   return (
     <div className={classes.diaryTextContent}>
-      {/* {currentDiary ? (
+      {currentDiary ? (
         <div>
           {returnCodeToBr(currentDiary.text)}
         </div>
@@ -38,7 +37,7 @@ const DiaryTextContent = () => {
         <p className="empty-item">
           There is no diary for today.
         </p>
-      )} */}
+      )}
     </div>
   );
 };

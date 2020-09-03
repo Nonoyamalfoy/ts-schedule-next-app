@@ -1,14 +1,12 @@
 import React from "react";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
-// import { getSchedules } from "../../reducks/users/selectors";
-// import { ScheduleItem } from "./index";
-// import { getCurrentDate } from "../../reducks/calendar/selectors";
-// import { getDate } from "../../services/calendar";
+import { getSchedules } from "../../reducks/users/selectors";
+import { ScheduleItem } from "./index";
+import { getCurrentDate } from "../../reducks/calendar/selectors";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => createStyles({
   scheduleList: {
     [theme.breakpoints.up(600)]: {
       position: "absolute",
@@ -31,31 +29,29 @@ const useStyles = makeStyles((theme) => ({
 
 const SchedulesList = () => {
   const classes = useStyles();
-  // const selector = useSelector((state) => state);
-  // const schedules = getSchedules(selector);
-  // const currentDate = getCurrentDate(selector);
-  // const currentDateSchedules = schedules ? schedules.filter((s) => s.date === currentDate.format("YYYYMMDD"))
-  //   : "";
+  const selector = useSelector((state) => state);
+  const schedules = getSchedules(selector);
+  const currentDate = getCurrentDate(selector);
+  const currentDateSchedules = schedules ? schedules.filter((s) => s.date === currentDate.format("YYYYMMDD"))
+    : "";
 
   return (
     <>
-      {/* {currentDateSchedules.length > 0 ? (
-        <List className={classes.scheduleList}>
+        {currentDateSchedules.length > 0 ? (
+      <List className={classes.scheduleList}>
           {currentDateSchedules.map((todaySchedule) => (
             <ScheduleItem
               schedule={todaySchedule}
               key={todaySchedule.scheduleId}
             />
           ))}
-        </List>
-      ) : (
-        <p className="empty-item">There are no schedules for today.</p>
-      )} */}
-      <List className={classes.scheduleList}>
-        <ListItem>
-          あああ
-        </ListItem>
-      </List>
+          </List>
+        ) : (
+          <p className="empty-item">
+            There are no schedules for today.
+          </p>
+        )}
+          
     </>
   );
 };
